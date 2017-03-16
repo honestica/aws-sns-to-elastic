@@ -2,13 +2,13 @@ import express from 'express'
 const router = express.Router()
 import config from './config'
 import elasticsearch from 'elasticsearch'
-import _ from 'lodash'
 
 const esClient = new elasticsearch.Client(config.elasticsearch)
 
 router.post('/:index/:types?', function (req, res, next) {
 	let index = req.params.index
 	let types = req.params.types
+	console.log(`running /${index}/${types}`)
 	if (!types) {
 		types = 'default'
 	}
@@ -22,6 +22,7 @@ router.post('/:index/:types?', function (req, res, next) {
 			body.rawMessage = raw
 		}
 	}
+	console.log("pushing to elastic", body)
 	esCreate(index, types, body)
 		.then((result) => {
 			res.send(result)
