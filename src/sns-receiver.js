@@ -22,7 +22,7 @@ router.post('/:index/:types?', function (req, res, next) {
 			body.rawMessage = raw
 		}
 	}
-	console.log("pushing to elastic", body)
+	// console.log("pushing to elastic", body)
 	esCreate(index, types, body)
 		.then((result) => {
 			res.send(result)

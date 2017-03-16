@@ -10,10 +10,10 @@ import sns from './sns-receiver'
 // create app
 const app = express();
 //add middlewares
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+app.use(bodyParser.text());
+// app.use(bodyParser.urlencoded({
+//   extended: true
+// }));
 app.use('/sns-receiver', sns)
 
 // catch 404 and forward to error handler
