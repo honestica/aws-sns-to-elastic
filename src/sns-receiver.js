@@ -15,8 +15,10 @@ router.post('/:index/:types?', function (req, res, next) {
 	let body = req.body
 	if (body.Message) {
 		let raw = body.Message
-		body.Message = JSON.parse(raw)
-		if (_.isEmpty(body.Message)) {
+		try {
+			body.Message = JSON.parse(raw)
+		} catch(e) {
+			body.Message = {}
 			body.rawMessage = raw
 		}
 	}
