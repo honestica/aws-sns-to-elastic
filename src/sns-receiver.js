@@ -2,6 +2,7 @@ import express from 'express'
 const router = express.Router()
 import config from './config'
 import elasticsearch from 'elasticsearch'
+import _ from 'lodash'
 
 const esClient = new elasticsearch.Client(config.elasticsearch)
 
@@ -13,7 +14,11 @@ router.post('/:index/:types?', function (req, res, next) {
 	}
 	let body = req.body
 	if (body.Message) {
-		body.Message = JSON.parse(body.Message)
+		let raw = body.Message
+		body.Message = JSON.parse(raw)
+		if (_.isEmpty(body.Message)) {
+			body.rawMessage = raw
+		}
 	}
 	esCreate(index, types, body)
 		.then((result) => {
