@@ -37,7 +37,7 @@ app.use((err, req, res, next) => {
 
 // START AND STOP
 const server = app.listen(config.port, () => {
-
+  console.log("Listening to port ", config.port)
 });
 process.on('SIGINT', () => {
 

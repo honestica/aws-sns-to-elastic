@@ -8,7 +8,7 @@ Configuration (Via ENV)
 
 | Env name           | Description                                  | Default value  |
 |:-------------------|:---------------------------------------------|:---------------|
-| PORT               | The port for the endpoint                    | 5000           |
+| PORT               | The port for the endpoint                    | 3000           |
 | ELASTICSEARCH_HOST | The host and port for elasticsearch endpoint | localhost:9200 |
 
 # Docker
