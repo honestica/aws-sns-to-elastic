@@ -14,6 +14,18 @@ app.use(bodyParser.text());
 // app.use(bodyParser.urlencoded({
 //   extended: true
 // }));
+
+
+//parse all the text to JSON (if able to)
+app.use((req, res, next) => {
+  try {
+    req.body = JSON.parse(req.body)
+  } catch(e) {
+    console.log("cannot parse text body to json: ", req.body)
+  }
+  next()
+})
+
 app.use('/sns-receiver', sns)
 
 // catch 404 and forward to error handler
