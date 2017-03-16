@@ -1,0 +1,15 @@
+{
+  "presets":["es2015","latest"],
+  "plugins":[
+    ["module-resolver", {
+        "root": ["./src"]
+    }],
+    ["transform-regenerator",{"async":false}],
+    ["babel-plugin-transform-runtime" ,{
+      "helpers": false,
+      "polyfill": false,
+      "regenerator": true,
+      "moduleName": "babel-runtime"
+    }]
+  ]
+}
