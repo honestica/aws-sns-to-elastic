@@ -13,4 +13,7 @@ Configuration (Via ENV)
 
 # Docker
 
-this lib will be built to docker
+docker build -t lifen.azurecr.io/honestica/aws-sns-elastic:latest .
+
+# Helm Chart 
+There is a helm chart to launch this on the k8s cluster : https://github.com/honestica/k8s/tree/master/dev/ops/charts/aws-sns-elastic
