@@ -7,6 +7,8 @@ const esClient = new elasticsearch.Client(config.elasticsearch)
 
 router.post('/:index/:types?', function (req, res, next) {
 	let index = req.params.index
+	let currentDate = new Date()
+	let dailyIndex = index + '-' + currentDate.getFullYear() + '.' + (currentDate.getMonth() + 1) + '.' + currentDate.getDate()
 	let types = req.params.types
 	console.log(`running /${index}/${types}`)
 	if (!types) {
@@ -23,7 +25,7 @@ router.post('/:index/:types?', function (req, res, next) {
 		}
 	}
 	// console.log("pushing to elastic", body)
-	esCreate(index, types, body)
+	esCreate(dailyIndex, types, body)
 		.then((result) => {
 			res.send(result)
 		}).catch(e => {
