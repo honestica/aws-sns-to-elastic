@@ -11,9 +11,12 @@ router.post('/:index/:types?', function (req, res, next) {
 	let dailyIndex = index + '-' + currentDate.getFullYear() + '.' + (currentDate.getMonth() + 1) + '.' + currentDate.getDate()
 	let types = req.params.types
 	console.log(`running /${index}/${types}`)
-	if (!types) {
-		types = 'default'
-	}
+//	Override types for ES 6.3 where an index can only handle a single type value
+//	Leaving the ability to specify a type in the route in order to allow for mapping it in the future into another field.
+//	if (!types) {
+//		types = 'default'
+//	}
+	types = 'default'
 	let body = req.body
 	if (body.Message) {
 		let raw = body.Message
