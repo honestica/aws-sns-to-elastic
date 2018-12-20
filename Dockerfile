@@ -1,4 +1,4 @@
-FROM node:6-alpine
+FROM node:11.5-alpine
 
 RUN mkdir -p /build-tmp
 WORKDIR /build-tmp
