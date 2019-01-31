@@ -41,7 +41,8 @@ function esCreate(index, types, body) {
 	return esClient.index({
 			index: index,
 			type: types,
-			body: body
+			body: body,
+			id: body.Message.MessageId
 		})
 }
 
