@@ -23,6 +23,7 @@ router.post('/:index/:types?', function (req, res, next) {
     try {
       body.Message = JSON.parse(raw)
     } catch(e) {
+      console.log("Failed parsing body as JSON, falling back to raw")
       body.Message = {}
       body.rawMessage = raw
     }
