@@ -16,10 +16,8 @@ RUN mkdir -p /app
 
 RUN mv /build-tmp/package.json /app/package.json \
  && mv /build-tmp/build /app/build \
- && mv /build-tmp/node_modules /app/node_modules
-#
-## FINISH
-RUN rm -rf /build-tmp
+ && mv /build-tmp/node_modules /app/node_modules \
+ && rm -rf /build-tmp
 
 WORKDIR /app
 
