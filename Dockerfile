@@ -2,10 +2,10 @@ FROM node:12.6-alpine
 
 RUN mkdir -p /build-tmp
 WORKDIR /build-tmp
-ADD package.json /build-tmp/package.json
-ADD .babelrc /build-tmp/.babelrc
-ADD .eslintrc /build-tmp/.eslintrc
-ADD src /build-tmp/src
+COPY package.json /build-tmp/package.json
+COPY .babelrc /build-tmp/.babelrc
+COPY .eslintrc /build-tmp/.eslintrc
+COPY src /build-tmp/src
 
 RUN npm install --silent
 RUN npm run build
