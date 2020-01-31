@@ -175,3 +175,6 @@ fabric.properties
 # *.ipr
 
 # End of https://www.gitignore.io/api/node,osx,webstorm,sublimetext
+
+# Vim tempoary file
+*.swp
