@@ -12,8 +12,7 @@ Configuration (Via ENV)
 | ELASTICSEARCH_HOST | The host and port for elasticsearch endpoint | localhost:9200 |
 
 # Docker
-
-docker build -t lifen.azurecr.io/honestica/aws-sns-elastic:latest .
+Build by Circle, more details [here](.circleci/config.yml).
 
 # Helm Chart 
 There is a helm chart to launch this on the k8s cluster : https://github.com/honestica/k8s/tree/master/dev/ops/charts/aws-sns-elastic

@@ -1,0 +1,12 @@
+version: 2.1
+orbs:
+  gally-bot: lifen/gally-bot@dev:first
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - gally-bot/docker-build-and-push:
+          context: org-global
+          applicationName: aws-sns-to-elastic
+          dockerTag: $CIRCLE_SHA1
