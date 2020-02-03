@@ -1,27 +1,23 @@
-FROM node:10.15.1-alpine
+FROM node:12.6-alpine AS build
 
-RUN mkdir -p /build-tmp
-WORKDIR /build-tmp
-ADD package.json /build-tmp/package.json
-ADD .babelrc /build-tmp/.babelrc
-ADD .eslintrc /build-tmp/.eslintrc
-ADD src /build-tmp/src
+WORKDIR /build
+COPY package.json /build/package.json
+COPY .babelrc /build/.babelrc
+COPY .eslintrc /build/.eslintrc
+COPY src /build/src
 
-RUN npm install --silent
-RUN npm run build
+RUN npm install --silent \
+ && npm run build \
+ && npm prune --production --silent
 
-RUN npm prune --production --silent
-#
-RUN mkdir -p /app
-#
-RUN mv /build-tmp/package.json /app/package.json && \
-   mv /build-tmp/build /app/build && \
-	mv /build-tmp/node_modules /app/node_modules
-#
-## FINISH
-RUN rm -rf /build-tmp
-#
+# Final image
+
+FROM node:12.6-alpine
+
 WORKDIR /app
+COPY --from=build /build/package.json /app/package.json
+COPY --from=build /build/build /app/build
+COPY --from=build /build/node_modules /app/node_modules
 
 EXPOSE 3000
 CMD ["npm","run","serve"]
