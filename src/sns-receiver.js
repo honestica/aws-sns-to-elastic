@@ -43,7 +43,7 @@ function esCreate(index, types, body) {
     index: index,
     type: types,
     body: body,
-    id: body.Message.MessageId
+    id: body.MessageId
   })
 }
 

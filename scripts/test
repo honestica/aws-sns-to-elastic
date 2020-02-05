@@ -52,6 +52,7 @@ fetch('http://127.0.0.1:3000/sns-receiver/sns-messages/', {
                         MessageId: 'abcd'
                       }
                     )
+                    assert.equal(es_res[0]._id, 'abcd')
                     // === End of main tests ====
                   } catch (err) {
                     console.log(err)
