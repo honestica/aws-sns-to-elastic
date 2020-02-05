@@ -16,3 +16,10 @@ Build by Circle, more details [here](.circleci/config.yml).
 
 # Helm Chart 
 There is a helm chart to launch this on the k8s cluster : https://github.com/honestica/k8s/tree/master/dev/ops/charts/aws-sns-elastic
+
+# Local development
+
+```
+docker-compose up
+./scripts/test
+```

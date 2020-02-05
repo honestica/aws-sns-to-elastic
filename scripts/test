@@ -1,0 +1,75 @@
+#!/usr/bin/env node
+
+const fetch = require('node-fetch')
+const assert = require('assert')
+const util = require('util')
+
+const data = {
+  "TopicArn": "arn:aws:sns:us-east-1:123456:fake-topic",
+  "Message": "{\"content\":\"fake\"}",
+  "MessageId": "abcd"
+}
+
+const index = 'sns-messages'
+const currentDate = new Date()
+const dailyIndex = index + '-' + currentDate.getFullYear() + '.' + (currentDate.getMonth() + 1) + '.' + currentDate.getDate()
+let exit_code = 0
+
+fetch('http://127.0.0.1:3000/sns-receiver/sns-messages/', {
+  method: 'post',
+  body: JSON.stringify(data)
+}).then(
+  // Wait few seconds to be sure that data has been inserted
+  setTimeout(
+    () => {
+      fetch(`http://127.0.0.1:9200/${dailyIndex}/_search`, {
+        method: 'get'
+      }).then(
+        res => {
+          fetch(`http://127.0.0.1:9200/${dailyIndex}`, {
+            method: 'delete'
+          }).then(
+            () => {
+              try {
+                assert.equal(res.status, 200)
+              } catch (err) {
+                console.log(err)
+                exit_code = 1
+              }
+
+              res.json().then(
+                json => {
+                  console.log(`Elasticsearch index data: ${util.inspect(json, {showHidden: false, depth: null})}`)
+                  const es_res = json.hits.hits
+                  try {
+                    // ==== Main tests here ====
+                    assert.equal(es_res.length, 1)
+                    assert.deepEqual(
+                      es_res[0]._source,
+                      {
+                        TopicArn: 'arn:aws:sns:us-east-1:123456:fake-topic',
+                        Message: { content: 'fake' },
+                        MessageId: 'abcd'
+                      }
+                    )
+                    // === End of main tests ====
+                  } catch (err) {
+                    console.log(err)
+                    exit_code = 1
+                  }
+                  if(exit_code == 0) {
+                    console.log('✔ All good')
+                  } else {
+                    console.log('✖ Test failed')
+                  }
+                  process.exit(exit_code)
+                }
+              )
+            }
+          )
+        }
+      )
+    },
+    1500
+  )
+)
