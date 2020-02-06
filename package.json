@@ -5,9 +5,12 @@
   "main": "app.js",
   "scripts": {
     "start": "node_modules/.bin/nodemon src/app.js --watch src --exec 'node_modules/.bin/eslint src && node_modules/.bin/babel-node'",
-    "test": "./scripts/test && eslint src/*.js",
+    "test": "npm run docker-up && ./scripts/test && npm run lint",
     "build": "rm -rf build/** && node_modules/.bin/babel src/ -d build -s",
-    "serve": "NODE_ENV=production node ./build/app.js"
+    "serve": "NODE_ENV=production node ./build/app.js",
+    "lint": "eslint src/*.js",
+    "docker-up": "docker-compose ps|grep 'Up' || (docker-compose up -d && sleep 10)",
+    "docker-clean": "docker-compose down"
   },
   "author": "puttpotsawee",
   "repository": "puttpotsawee/aws-sns-to-elastic",
