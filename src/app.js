@@ -1,5 +1,3 @@
-// built-in
-import path from 'path';
 // external
 import bodyParser from 'body-parser';
 import express from 'express';
