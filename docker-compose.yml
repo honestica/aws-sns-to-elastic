@@ -1,0 +1,20 @@
+version: "3.3"
+
+services:
+  app:
+    image: node:12.6-alpine
+    command: npm start
+    volumes:
+      - .:/app
+    working_dir: /app
+    environment:
+      ELASTICSEARCH_HOST: elastic:9200
+    ports:
+      - 127.0.0.1:3000:3000
+    links:
+      - elastic
+
+  elastic:
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.7.2
+    ports:
+      - 127.0.0.1:9200:9200

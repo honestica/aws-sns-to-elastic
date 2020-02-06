@@ -1,5 +1,3 @@
-// built-in
-import path from 'path';
 // external
 import bodyParser from 'body-parser';
 import express from 'express';
@@ -36,8 +34,7 @@ app.use((req, res, next) => {
 });
 // general errors
 app.use((err, req, res, next) => {
-  console.log("Error!!")
-  console.log(err)
+  console.log(`Error: ${err}`)
   const sc = err.status || 500;
   res.status(sc);
   res.send({
