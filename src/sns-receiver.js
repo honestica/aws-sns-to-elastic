@@ -6,19 +6,19 @@ import elasticsearch from 'elasticsearch'
 const esClient = new elasticsearch.Client(config.elasticsearch)
 
 router.post('/:index/:types?', function (req, res, next) {
-  let index = req.params.index
-  let currentDate = new Date()
-  let dailyIndex = index + '-' + currentDate.getFullYear() + '.' + (currentDate.getMonth() + 1) + '.' + currentDate.getDate()
+  const index = req.params.index
+  const currentDate = new Date()
+  const dailyIndex = index + '-' + currentDate.getFullYear() + '.' + (currentDate.getMonth() + 1) + '.' + currentDate.getDate()
   //  Override types for ES 6.3 where an index can only handle a single type value
   //  Leaving the ability to specify a type in the route in order to allow for mapping it in the future into another field.
   //  if (!types) {
   //    types = 'default'
   //  }
-  let types = 'default'
-  let body = req.body
+  const types = 'default'
+  const body = req.body
   console.log(`Received message on /${index} from ARN ${body.TopicArn}`)
   if (body.Message) {
-    let raw = body.Message
+    const raw = body.Message
     try {
       body.Message = JSON.parse(raw)
     } catch(e) {
