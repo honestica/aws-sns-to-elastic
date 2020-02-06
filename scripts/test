@@ -12,7 +12,10 @@ const data = {
 
 const index = 'sns-messages'
 const currentDate = new Date()
-const dailyIndex = index + '-' + currentDate.getFullYear() + '.' + (currentDate.getMonth() + 1) + '.' + currentDate.getDate()
+const day = ('0' + currentDate.getDate()).slice(-2)
+const month = ('0' + (currentDate.getMonth() + 1)).slice(-2)
+const year = currentDate.getFullYear()
+const dailyIndex = `index-${year}.${month}.${day}`
 let exit_code = 0
 
 fetch('http://127.0.0.1:3000/sns-receiver/sns-messages/', {

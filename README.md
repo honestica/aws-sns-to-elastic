@@ -20,6 +20,7 @@ There is a helm chart to launch this on the k8s cluster : https://github.com/hon
 # Local development
 
 ```
-docker-compose up
-./scripts/test
+npm test
 ```
+
+Requires `docker-compose`.
