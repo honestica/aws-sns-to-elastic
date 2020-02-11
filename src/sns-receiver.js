@@ -11,7 +11,7 @@ router.post('/:index/:types?', function (req, res, next) {
   const day = ('0' + currentDate.getDate()).slice(-2)
   const month = ('0' + (currentDate.getMonth() + 1)).slice(-2)
   const year = currentDate.getFullYear()
-  const dailyIndex = `index-${year}.${month}.${day}`
+  const dailyIndex = `${index}-${year}.${month}.${day}`
   //  Override types for ES 6.3 where an index can only handle a single type value
   //  Leaving the ability to specify a type in the route in order to allow for mapping it in the future into another field.
   //  if (!types) {
