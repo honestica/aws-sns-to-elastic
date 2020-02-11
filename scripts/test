@@ -25,11 +25,11 @@ fetch('http://127.0.0.1:3000/sns-receiver/sns-messages/', {
   // Wait few seconds to be sure that data has been inserted
   setTimeout(
     () => {
-      fetch(`http://127.0.0.1:9200/${dailyIndex}/_search`, {
+      fetch(`http://elastic:9200/${dailyIndex}/_search`, {
         method: 'get'
       }).then(
         res => {
-          fetch(`http://127.0.0.1:9200/${dailyIndex}`, {
+          fetch(`http://elastic:9200/${dailyIndex}`, {
             method: 'delete'
           }).then(
             () => {

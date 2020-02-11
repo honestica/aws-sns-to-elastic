@@ -1,4 +1,4 @@
-FROM node:12.6-alpine AS build
+FROM node:12.15.0-alpine AS build
 
 WORKDIR /build
 COPY package.json /build/package.json
@@ -12,7 +12,7 @@ RUN npm install --silent \
 
 # Final image
 
-FROM node:12.6-alpine
+FROM node:12.15.0-alpine
 
 WORKDIR /app
 COPY --from=build /build/package.json /app/package.json
