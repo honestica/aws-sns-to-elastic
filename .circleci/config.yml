@@ -2,11 +2,29 @@ version: 2.1
 orbs:
   gally-bot: lifen/gally-bot@dev:first
 
+defaults: &defaults
+  working_directory: ~/aws-sns-to-elastic
+
+jobs:
+  npm_test:
+    machine: true
+    steps:
+      - checkout
+      - run: make setup
+      - run: make test
+
 workflows:
   version: 2
   build:
     jobs:
+      - npm_test
       - gally-bot/docker-build-and-push:
           context: org-global
+          filters:
+            branches:
+              only:
+                - master
           applicationName: aws-sns-to-elastic
           dockerTag: $CIRCLE_SHA1
+          requires:
+            - npm_test
