@@ -25,7 +25,7 @@ sh: ## Open a shell on app container
 .PHONY: test
 test: ## Run test suite
 	docker-compose up -d
-	sleep 10
+	sleep 1 && docker-compose exec app scripts/wait_elastic
 	docker-compose exec app npm test
 
 .PHONY: test-fast
