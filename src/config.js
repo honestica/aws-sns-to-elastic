@@ -8,6 +8,6 @@ export default {
   // path to root directory of this app
   root: path.normalize(__dirname),
   elasticsearch: {
-    host: process.env.ELASTICSEARCH_HOST || 'localhost:9200'
+    node: process.env.ELASTICSEARCH_HOST || 'localhost:9200'
   }
 };
