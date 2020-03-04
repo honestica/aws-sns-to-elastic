@@ -1,9 +1,9 @@
 import express from 'express'
 const router = express.Router()
 import config from './config'
-import elasticsearch from 'elasticsearch'
+const { Client } = require('@elastic/elasticsearch')
 
-const esClient = new elasticsearch.Client(config.elasticsearch)
+const esClient = new Client(config.elasticsearch)
 
 router.post('/:index/:types?', function (req, res, next) {
   const index = req.params.index
@@ -12,12 +12,6 @@ router.post('/:index/:types?', function (req, res, next) {
   const month = ('0' + (currentDate.getMonth() + 1)).slice(-2)
   const year = currentDate.getFullYear()
   const dailyIndex = `${index}-${year}.${month}.${day}`
-  //  Override types for ES 6.3 where an index can only handle a single type value
-  //  Leaving the ability to specify a type in the route in order to allow for mapping it in the future into another field.
-  //  if (!types) {
-  //    types = 'default'
-  //  }
-  const types = 'default'
   const body = req.body
   console.log(`Received message on /${index} from ARN ${body.TopicArn}`)
   if (body.Message) {
@@ -31,7 +25,7 @@ router.post('/:index/:types?', function (req, res, next) {
     }
   }
   // console.log("pushing to elastic", body)
-  esCreate(dailyIndex, types, body)
+  esCreate(dailyIndex, body)
     .then((result) => {
       res.send(result)
     }).catch(e => {
@@ -40,10 +34,9 @@ router.post('/:index/:types?', function (req, res, next) {
     })
 })
 
-function esCreate(index, types, body) {
+function esCreate(index, body) {
   return esClient.index({
     index: index,
-    type: types,
     body: body,
     id: body.MessageId
   })
