@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -u
+set -e
+
+while ! wget "${ELASTICSEARCH_HOST}/_cat/nodes" --quiet -O - > /dev/null; do
+  echo 'Waiting for elastic to be up...'
+  sleep 1
+done

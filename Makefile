@@ -11,14 +11,21 @@ help:
 down: ## Remove the local environment
 	docker-compose down
 
+.PHONY: reset
+reset: down test ## Reset the local environment
+
 .PHONY: setup
 setup: ## Install project dependencies
 	docker-compose run --rm app npm install
 
+.PHONY: sh
+sh: ## Open a shell on app container
+	docker-compose exec app sh
+
 .PHONY: test
 test: ## Run test suite
 	docker-compose up -d
-	sleep 10
+	sleep 1 && docker-compose exec app scripts/wait_elastic
 	docker-compose exec app npm test
 
 .PHONY: test-fast
